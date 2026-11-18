@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { createCategory, deleteCategory, getAllCategories, getCategoryById, updateCategory } from "../services/category.service";
+import { createCategory, deleteCategory, getAllCategories, getCategoryById, updateCategory } from "../services/category.service.js";
 
-export const createCategoryHandler = (req: Request, res: Response): void => {
+export const createCategoryHandler = async (req: Request, res: Response): Promise<void> => {
     const { name, description } = req.body;
 
-    const category = createCategory(name, description ?? null);
+    const category = await createCategory(name, description ?? null);
 
     res.status(201).json({
         success: true,
@@ -13,8 +13,8 @@ export const createCategoryHandler = (req: Request, res: Response): void => {
     });
 };
 
-export const getAllCategoriesHandler = (_req: Request, res: Response): void => {
-    const categories = getAllCategories();
+export const getAllCategoriesHandler = async(_req: Request, res: Response): Promise<void> => {
+    const categories = await getAllCategories();
 
     res.status(200).json({
         success: true,
@@ -22,10 +22,10 @@ export const getAllCategoriesHandler = (_req: Request, res: Response): void => {
     });
 };
 
-export const getCategoryByIdHandler = (req: Request, res: Response): void => {
+export const getCategoryByIdHandler = async (req: Request, res: Response): Promise<void> => {
     const id: string = String(req.params.id);
 
-    const category = getCategoryById(id);
+    const category = await getCategoryById(id);
 
     if (!category) {
         res.status(404).json({
@@ -41,11 +41,11 @@ export const getCategoryByIdHandler = (req: Request, res: Response): void => {
     });
 };
 
-export const updateCategoryHandler = (req: Request, res: Response): void => {
+export const updateCategoryHandler = async (req: Request, res: Response): Promise<void> => {
     const id: string = String(req.params.id);
     const { name, description } = req.body;
 
-    const category = updateCategory(id, name, description);
+    const category = await updateCategory(id, name, description);
 
     if (!category) {
         res.status(404).json({
@@ -62,10 +62,10 @@ export const updateCategoryHandler = (req: Request, res: Response): void => {
     });
 };
 
-export const deleteCategoryHandler = (req: Request, res: Response): void => {
+export const deleteCategoryHandler = async (req: Request, res: Response): Promise<void> => {
     const id: string = String(req.params.id);
 
-    const deleted = deleteCategory(id);
+    const deleted = await deleteCategory(id);
 
     if (!deleted) {
         res.status(404).json({

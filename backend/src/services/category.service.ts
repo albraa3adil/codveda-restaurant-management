@@ -1,49 +1,55 @@
 import { randomUUID } from "crypto";
-import { Category } from "../types/category.types";
+import { Category } from "../types/category.types.js";
+import prisma from "../config/prisma.js";
 
 const categories: Category[] = [];
 
-export const createCategory = (name: string, description: string | null): Category => {
-    const category: Category = {
-        id: randomUUID(),
-        name,
-        description
-    };
+export const createCategory = (name: string, description: string | null) => {
 
-    categories.push(category);
-
-    return category;
+    return prisma.category.create({
+        data: {
+            name,
+            description
+        }
+    });
 };
 
-export const getAllCategories = (): Category[] => {
-    return categories;
+export const getAllCategories = () => {
+    return prisma.category.findMany({
+        orderBy: {
+            name: 'asc'
+        }
+    });
 };
 
-export const getCategoryById = (id: string): Category | undefined => {
-    return categories.filter((category) => category.id === id)[0];
+export const getCategoryById = (id: string) => {
+    return prisma.category.findUnique({
+        where: { id }
+    });
 };
 
-export const updateCategory = (id: string, name: string, description: string | null): Category | undefined => {
-    const category: Category = categories.filter((category) => category.id === id)[0];
+export const updateCategory = async (id: string, name: string, description: string | null) => {
+    const result = await prisma.category.updateMany({
+        where: { id },
+        data: {
+            name,
+            description
+        }
+    });
 
-    if (!category) {
-        return undefined;
+    if (result.count === 0) {
+        return null;
     }
 
-    category.name = name;
-    category.description = description;
-
-    return category;
+    return prisma.category.findUnique({
+        where: { id }
+    });
 };
 
-export const deleteCategory = (id: string): Boolean => {
-    const categoryIndex: number = categories.findIndex((category) => category.id === id);
+export const deleteCategory = async (id: string): Promise<boolean> => {
+    const result = await prisma.category.deleteMany({
+        where: { id }
+    });
 
-    if (categoryIndex === -1) {
-        return false;
-    }
-
-    categories.splice(categoryIndex, 1);
-
-    return true;
+    return result.count > 0;
 };

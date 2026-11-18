@@ -5,9 +5,9 @@ import {
     getAllCategoriesHandler,
     getCategoryByIdHandler,
     updateCategoryHandler
-} from "../controllers/category.controller";
-import { validate } from "../middlewares/validate.middleware";
-import { createCategorySchema, updateCategorySchema } from "../validators/category.validator";
+} from "../controllers/category.controller.js";
+import { validate } from "../middlewares/validate.middleware.js";
+import { createCategorySchema, updateCategorySchema } from "../validators/category.validator.js";
 
 const router = Router();
 
