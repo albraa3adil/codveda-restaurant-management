@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Restaurant Management System - Menu Category Management">
+    <title>Restaurant Management | Categories</title>
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+    <div class="app">
+        <header class="app-header">
+            <div class="brand">
+                <h1>Restaurant Management</h1>
+                <p>Management Dashboard</p>
+            </div>
+
+            <div class="role">Admin</div>
+        </header>
+
+        <div class="main-content">
+            <section class="heading">
+                <div>
+                    <h2>Menu Categories</h2>
+                </div>
+            </section>
+
+            <section class="category-section">
+                <div class="section-header">
+                    <div>
+                        <h3>Categories</h3>
+                        <p id="category-count">Loading categories...</p>
+                    </div>
+
+                    <button type="button" id="add-category-btn" class="btn btn-primary">
+                        + Add Category
+                    </button>
+                </div>
+
+                <div class="feedback-message" id="feedback-message" role="status" aria-live="polite" hidden></div>
+
+                <form class="category-form" id="category-form" hidden>
+                    <h3 id="form-title">Add Category</h3>
+
+                    <div class="form-group">
+                        <label for="category-name">Category Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            id="category-name"
+                            placeholder="e.g. Burgers"
+                            minlength="2"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category-description">Description</label>
+                        <textarea
+                            name="description"
+                            id="category-description"
+                            placeholder="Describe this category"
+                            maxlength="255"
+                            rows="3"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-form-btn">
+                            Cancel
+                        </button>
+
+                        <button type="submit" class="btn btn-primary" id="submit-form-btn">
+                            Save Category
+                        </button>
+                    </div>
+                </form>
+
+                <div id="categories-container" class="categories-container">
+                    <p class="loading-message">Loading categories...</p>
+                </div>
+            </section>
+        </div>
+
+        <footer class="app-footer">
+            <p>Restaurant Management System &copy; 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
